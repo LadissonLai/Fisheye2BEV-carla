@@ -4,14 +4,15 @@ import numpy as np
 import os
 
 parser = argparse.ArgumentParser(description="Homography from Source to Destination Image")
-parser.add_argument('-id', '--CAMERA_ID', default=1, type=int, help='Camera ID')
-parser.add_argument('-path', '--INPUT_PATH', default='./data/', type=str, help='Input Source/Destination Image Path')
+parser.add_argument('-id', '--CAMERA_ID', default='front', type=str, help='Camera ID')
+parser.add_argument('-path', '--INPUT_PATH', default='./front/', type=str, help='Input Source/Destination Image Path')
 parser.add_argument('-bw','--BORAD_WIDTH', default=7, type=int, help='Chess Board Width (corners number)')
 parser.add_argument('-bh','--BORAD_HEIGHT', default=6, type=int, help='Chess Board Height (corners number)')
 parser.add_argument('-src', '--SOURCE_IMAGE', default='img_src', type=str, help='Source Image File Name Prefix (eg.:img_src)')
 parser.add_argument('-dst', '--DEST_IMAGE', default='img_dst', type=str, help='Destionation Image File Name Prefix (eg.:img_dst)')
-parser.add_argument('-size','--SCALED_SIZE', default=10, type=int, help='Scaled Chess Board Square Size (image pixel)')
-parser.add_argument('-subpix_s','--SUBPIX_REGION_SRC', default=3, type=int, help='Corners Subpix Region of img_src')
+parser.add_argument('-size','--SCALED_SIZE', default=8, type=int, help='Scaled Chess Board Square Size (image pixel)')
+# parser.add_argument('-size','--SCALED_SIZE', default=10, type=int, help='Scaled Chess Board Square Size (image pixel)')
+parser.add_argument('-subpix_s','--SUBPIX_REGION_SRC', default=3, type=int, help='Corners Subpix Region of img_src')#default=3
 parser.add_argument('-subpix_d','--SUBPIX_REGION_DST', default=3, type=int, help='Corners Subpix Region of img_dst')
 parser.add_argument('-center','--CENTER_FLAG', default=False, type=bool, help='Center Image Manually (Ture/False)')
 parser.add_argument('-scale','--SCALE_FLAG', default=False, type=bool, help='Scale Image to Fix Board Size (Ture/False)')
@@ -172,9 +173,13 @@ class ExCalibrator():
         ok, dst_corners = self.get_corners(dst_img, subpix = args.SUBPIX_REGION_DST, draw=True)
         if not ok:
             raise Exception("failed to find corners in destination image")
+        else:
+            print("dest image ok!")
         ok, src_corners = self.get_corners(src_img, subpix = args.SUBPIX_REGION_SRC, draw=True)
         if not ok:
             raise Exception("failed to find corners in source image")
+        else:
+            print("src img ok!")
         self.dst_corners_total = np.append(self.dst_corners_total, dst_corners, axis = 0)
         self.src_corners_total = np.append(self.src_corners_total, src_corners, axis = 0)
         self.homography, _ = cv2.findHomography(self.src_corners_total, self.dst_corners_total,method = cv2.RANSAC)

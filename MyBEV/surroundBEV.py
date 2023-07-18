@@ -4,16 +4,18 @@ import argparse
 import os
 
 parser = argparse.ArgumentParser(description="Generate Surrounding Camera Bird Eye View")
-parser.add_argument('-fw', '--FRAME_WIDTH', default=1280, type=int, help='Camera Frame Width')
-parser.add_argument('-fh', '--FRAME_HEIGHT', default=1024, type=int, help='Camera Frame Height')
-parser.add_argument('-bw', '--BEV_WIDTH', default=1000, type=int, help='BEV Frame Width')
-parser.add_argument('-bh', '--BEV_HEIGHT', default=1000, type=int, help='BEV Frame Height')
-parser.add_argument('-cw', '--CAR_WIDTH', default=250, type=int, help='Car Frame Width')
-parser.add_argument('-ch', '--CAR_HEIGHT', default=400, type=int, help='Car Frame Height')
-parser.add_argument('-fs', '--FOCAL_SCALE', default=1, type=float, help='Camera Undistort Focal Scale')
-parser.add_argument('-ss', '--SIZE_SCALE', default=2, type=float, help='Camera Undistort Size Scale')
-parser.add_argument('-blend','--BLEND_FLAG', default=False, type=bool, help='Blend BEV Image (Ture/False)')
-parser.add_argument('-balance','--BALANCE_FLAG', default=False, type=bool, help='Balance BEV Image (Ture/False)')
+parser.add_argument('-fw', '--FRAME_WIDTH', default=1920, type=int, help='Camera Frame Width')
+parser.add_argument('-fh', '--FRAME_HEIGHT', default=1080, type=int, help='Camera Frame Height')
+parser.add_argument('-bw', '--BEV_WIDTH', default=1080, type=int, help='BEV Frame Width') #939
+parser.add_argument('-bh', '--BEV_HEIGHT', default=1080, type=int, help='BEV Frame Height')
+# parser.add_argument('-cw', '--CAR_WIDTH', default=200, type=int, help='Car Frame Width')
+parser.add_argument('-cw', '--CAR_WIDTH', default=210, type=int, help='Car Frame Width')
+# parser.add_argument('-ch', '--CAR_HEIGHT', default=300, type=int, help='Car Frame Height')
+parser.add_argument('-ch', '--CAR_HEIGHT', default=420, type=int, help='Car Frame Height')
+parser.add_argument('-fs', '--FOCAL_SCALE', default=1.0, type=float, help='Camera Undistort Focal Scale')
+parser.add_argument('-ss', '--SIZE_SCALE', default=1.0, type=float, help='Camera Undistort Size Scale')
+parser.add_argument('-blend','--BLEND_FLAG', default=True, type=bool, help='Blend BEV Image (Ture/False)')
+parser.add_argument('-balance','--BALANCE_FLAG', default=True, type=bool, help='Balance BEV Image (Ture/False)')
 args = parser.parse_args()
 
 FRAME_WIDTH = args.FRAME_WIDTH
@@ -326,13 +328,16 @@ class BevGenerator:
         return surround
 
 def main():
-    front = cv2.imread('./data/front/front.jpg')
-    back = cv2.imread('./data/back/back.jpg')
-    left = cv2.imread('./data/left/left.jpg')
-    right = cv2.imread('./data/right/right.jpg')
-    car = cv2.imread('./data/car.jpg')
+    front = cv2.imread('./data/front/front.png')
+    back = cv2.imread('./data/back/back.png')
+    left = cv2.imread('./data/left/left.png')
+    right = cv2.imread('./data/right/right.png')
+    car = cv2.imread('./data/car.png')
     car = padding(car, BEV_WIDTH, BEV_HEIGHT)
     
+    if front is None:
+        print(front)
+        return
     bev = BevGenerator()
     surround = bev(front,back,left,right,car)
     
