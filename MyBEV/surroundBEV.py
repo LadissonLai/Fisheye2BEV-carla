@@ -9,13 +9,15 @@ parser.add_argument('-fh', '--FRAME_HEIGHT', default=1080, type=int, help='Camer
 parser.add_argument('-bw', '--BEV_WIDTH', default=1080, type=int, help='BEV Frame Width') #939
 parser.add_argument('-bh', '--BEV_HEIGHT', default=1080, type=int, help='BEV Frame Height')
 # parser.add_argument('-cw', '--CAR_WIDTH', default=200, type=int, help='Car Frame Width')
-parser.add_argument('-cw', '--CAR_WIDTH', default=210, type=int, help='Car Frame Width')
+parser.add_argument('-cw', '--CAR_WIDTH', default=170, type=int, help='Car Frame Width')
+# parser.add_argument('-cw', '--CAR_WIDTH', default=210, type=int, help='Car Frame Width')
 # parser.add_argument('-ch', '--CAR_HEIGHT', default=300, type=int, help='Car Frame Height')
-parser.add_argument('-ch', '--CAR_HEIGHT', default=420, type=int, help='Car Frame Height')
+parser.add_argument('-ch', '--CAR_HEIGHT', default=320, type=int, help='Car Frame Height') ## 200较好
+# parser.add_argument('-ch', '--CAR_HEIGHT', default=420, type=int, help='Car Frame Height')
 parser.add_argument('-fs', '--FOCAL_SCALE', default=1.0, type=float, help='Camera Undistort Focal Scale')
 parser.add_argument('-ss', '--SIZE_SCALE', default=1.0, type=float, help='Camera Undistort Size Scale')
-parser.add_argument('-blend','--BLEND_FLAG', default=True, type=bool, help='Blend BEV Image (Ture/False)')
-parser.add_argument('-balance','--BALANCE_FLAG', default=True, type=bool, help='Balance BEV Image (Ture/False)')
+parser.add_argument('-blend','--BLEND_FLAG', default=False, type=bool, help='Blend BEV Image (Ture/False)')
+parser.add_argument('-balance','--BALANCE_FLAG', default=False, type=bool, help='Balance BEV Image (Ture/False)')
 args = parser.parse_args()
 
 FRAME_WIDTH = args.FRAME_WIDTH
@@ -332,7 +334,7 @@ def main():
     back = cv2.imread('./data/back/back.png')
     left = cv2.imread('./data/left/left.png')
     right = cv2.imread('./data/right/right.png')
-    car = cv2.imread('./data/car.png')
+    car = cv2.imread('./data/car.jpg')
     car = padding(car, BEV_WIDTH, BEV_HEIGHT)
     
     if front is None:

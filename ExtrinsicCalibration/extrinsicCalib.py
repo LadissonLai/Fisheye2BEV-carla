@@ -4,8 +4,8 @@ import numpy as np
 import os
 
 parser = argparse.ArgumentParser(description="Homography from Source to Destination Image")
-parser.add_argument('-id', '--CAMERA_ID', default='front', type=str, help='Camera ID')
-parser.add_argument('-path', '--INPUT_PATH', default='./front/', type=str, help='Input Source/Destination Image Path')
+parser.add_argument('-id', '--CAMERA_ID', default='right', type=str, help='Camera ID')
+parser.add_argument('-path', '--INPUT_PATH', default='./right/', type=str, help='Input Source/Destination Image Path')
 parser.add_argument('-bw','--BORAD_WIDTH', default=7, type=int, help='Chess Board Width (corners number)')
 parser.add_argument('-bh','--BORAD_HEIGHT', default=6, type=int, help='Chess Board Height (corners number)')
 parser.add_argument('-src', '--SOURCE_IMAGE', default='img_src', type=str, help='Source Image File Name Prefix (eg.:img_src)')
