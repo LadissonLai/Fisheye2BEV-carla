@@ -7,3 +7,9 @@ This process contains 3 steps as follows:
 
 
 ![](Docs/BEV_Ret.png)
+
+# Get started
+```shell
+cd ./Synthesis
+python3 surround.py
+```
