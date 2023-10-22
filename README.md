@@ -11,5 +11,5 @@ This process contains 3 steps as follows:
 # Get started
 ```shell
 cd ./Synthesis
-python3 surround.py
+python3 surroundBEV.py
 ```
